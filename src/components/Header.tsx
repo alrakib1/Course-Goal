@@ -15,11 +15,11 @@ type HeaderProps ={
 
 const Header = ({image,children}:HeaderProps) => {
     return (
-        <div>
-            {/* <img src={image.src} alt={image.alt} /> */}
-            <img {...image}/>  //it will take all the key value and spread it 
+        <header>
+            {/* <img src={image.src} alt={image.alt} />  on image it will take all the value and spread it*/}
+            <img {...image}/>  
             {children}
-        </div>
+        </header>
     );
 };
 
