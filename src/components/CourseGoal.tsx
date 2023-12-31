@@ -1,5 +1,4 @@
 
-// import {type FC, type PropsWithChildren } from "react";
 import { type PropsWithChildren } from "react";
 type CourseGoalProps = PropsWithChildren<{title:string}>
 
@@ -27,6 +26,7 @@ const CourseGoal = ({title, children}: CourseGoalProps ) => {
 
 
 
+// import {type FC, type PropsWithChildren } from "react";
 //  another alternative is using FC generic type. Here the connected type is props type. 
 
 
