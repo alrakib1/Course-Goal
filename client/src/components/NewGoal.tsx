@@ -1,7 +1,11 @@
 import { useRef, type FormEvent } from "react";
 import useAxiosPublic from '../api/useAxiosPublic.tsx'
 
-const NewGoal = () => {
+type NewGoalProps = {
+  refetch : ()=> void
+}
+
+const NewGoal = ({refetch}):NewGoalProps => {
 
 
   const axiosPublic= useAxiosPublic();
@@ -20,6 +24,7 @@ const NewGoal = () => {
 
     const response = await axiosPublic.post('/all',data );
     console.log(response.data)
+    refetch();
 
 
   };

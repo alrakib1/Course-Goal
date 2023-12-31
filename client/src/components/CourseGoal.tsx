@@ -2,7 +2,8 @@ import { type PropsWithChildren } from "react";
 type CourseGoalProps = PropsWithChildren<{
   id: number;
   title: string;
-  onDelete: (id: number) => void;
+  onDelete: (_id: number) => void;
+  refetch: ()=> void;
 }>;
 
 // import {type ReactNode } from "react";
@@ -10,7 +11,7 @@ type CourseGoalProps = PropsWithChildren<{
 
 // we can import children two ways here. using generic or the other one
 
-const CourseGoal = ({ title,id, children, onDelete }: CourseGoalProps) => {
+const CourseGoal = ({ title,id, children, onDelete, refetch }: CourseGoalProps) => {
   return (
     <article>
       <div>

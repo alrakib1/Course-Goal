@@ -5,13 +5,16 @@ import { useState } from "react";
 import CourseGoalList from "./components/CourseGoalList";
 import NewGoal from "./components/NewGoal";
 import useAxiosPublic from "./api/useAxiosPublic";
+import AllGoalsData from "./api/AllGoalsData.js";
 
 
 export type CourseGoal = {
   title: string;
   description: string;
-  id: number;
+  _id: number;
 };
+
+
 
 export default function App() {
   const [goals, setGoals] = useState<CourseGoal[]>([]);
@@ -19,7 +22,9 @@ export default function App() {
 
   const axiosPublic = useAxiosPublic();
 
-  
+  const {allGoals, refetch} = AllGoalsData();
+ 
+// console.log(allGoals)
 
   const handleAddGoal = () => {
     setGoals((prevGoals) => {
@@ -41,8 +46,8 @@ export default function App() {
       <Header image={{ src: goalsImg, alt: "A list of goals" }}>
         <h1>Your Course Goals</h1>
       </Header>
-     <NewGoal />
-      <CourseGoalList  onDeleteGoal={ handleDeleteGoal} goals={goals}/>
+     <NewGoal refetch={refetch}/>
+      <CourseGoalList  onDeleteGoal={ handleDeleteGoal} goals={allGoals} refetch={refetch}/>
     </main>
   );
 }
