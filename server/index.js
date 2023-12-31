@@ -59,3 +59,17 @@ app.post("/all", async (req, res) => {
   }
 });
 
+app.get("/all", async (req, res) => {
+    try {
+      const goals = await Goals.find();
+      if (goals) {
+        res
+          .status(200)
+          .send({ message: "found all goals", success: true, result: goals });
+      }
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  });
+  
+  
