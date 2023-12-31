@@ -73,3 +73,14 @@ app.get("/all", async (req, res) => {
   });
   
   
+  app.delete('/all/:id',async(req,res)=>{
+    try {
+        const id = req.params.id;
+        const goal = await Goals.deleteOne({_id:id});
+        if(goal){
+            res.status(200).send({message: "deleted the goal", success: true, result: goal})
+        }
+    } catch (error) {
+        
+    }
+})
