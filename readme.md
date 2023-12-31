@@ -1,0 +1,2 @@
+## First web-app using typescript, react and mongoose
+This is my first web app using typescript, react and mongoose. I have learned basic mongoose and typescript but I have yet to learn typescript with react properly.
