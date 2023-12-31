@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import CourseGoalList from "./components/CourseGoalList";
 import NewGoal from "./components/NewGoal";
 // import useAxiosPublic from "./api/useAxiosPublic";
-import AllGoalsData from "./api/AllGoalsData.js";
+import AllGoalsData from "./api/AllGoalsData.jsx";
 
 
 export type CourseGoal = {

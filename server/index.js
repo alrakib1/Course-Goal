@@ -1,11 +1,20 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require('cors');
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 5000;
-app.use(cors());
+
+const corsOptions = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  exposedHeaders: "*",
+};
+
+
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -56,13 +65,11 @@ app.post("/all", async (req, res) => {
 
     const newGoalData = await newGoal.save();
 
-    res
-      .status(201)
-      .send({
-        message: "goal has been added",
-        success: true,
-        result: newGoalData,
-      });
+    res.status(201).send({
+      message: "goal has been added",
+      success: true,
+      result: newGoalData,
+    });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

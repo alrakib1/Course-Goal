@@ -25,7 +25,8 @@ const NewGoal = ({ refetch }: NewGoalProps) => {
         if (response.data.result) {
           toast.success(response.data.message);
           refetch();
-        }
+
+        } 
       } catch (error) {
         console.error("Error adding goal:", error);
       }
