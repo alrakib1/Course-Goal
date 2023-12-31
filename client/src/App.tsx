@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import { useState } from "react";
 import CourseGoalList from "./components/CourseGoalList";
 import NewGoal from "./components/NewGoal";
+import useAxiosPublic from "./api/useAxiosPublic";
 
 
 export type CourseGoal = {
@@ -14,6 +15,11 @@ export type CourseGoal = {
 
 export default function App() {
   const [goals, setGoals] = useState<CourseGoal[]>([]);
+
+
+  const axiosPublic = useAxiosPublic();
+
+  
 
   const handleAddGoal = () => {
     setGoals((prevGoals) => {
