@@ -1,13 +1,27 @@
 import { useRef, type FormEvent } from "react";
+import useAxiosPublic from '../api/useAxiosPublic.tsx'
 
 const NewGoal = () => {
+
+
+  const axiosPublic= useAxiosPublic();
+
+
   const goal = useRef<HTMLInputElement>(null);
   const summary = useRef<HTMLInputElement>(null);
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+
+  
+  const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const enteredGoal = goal.current!.value;
     const enteredSummary = summary.current!.value;
-    console.log(enteredGoal,enteredSummary);
+    // console.log(enteredGoal,enteredSummary);
+    const data = {enteredGoal,enteredSummary}
+
+    const response = await axiosPublic.post('/all',data );
+    console.log(response.data)
+
+
   };
 
   return (

@@ -1,11 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require('cors');
 require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 5000;
+app.use(cors());
 
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 
 const goalSchema = new mongoose.Schema({
@@ -45,9 +48,11 @@ app.get("/", (req, res) => {
 app.post("/all", async (req, res) => {
   try {
     const newGoal = new Goals({
-      goal: req.body.goal,
-      summary: req.body.summary,
+      goal: req.body.enteredGoal,
+      summary: req.body.enteredSummary,
     });
+
+    console.log(newGoal)
 
     const newGoalData = await newGoal.save();
 
