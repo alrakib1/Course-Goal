@@ -53,34 +53,37 @@ app.post("/all", async (req, res) => {
 
     res
       .status(201)
-      .send({ message: "goal has been added", success: true, result: newGoalData });
+      .send({
+        message: "goal has been added",
+        success: true,
+        result: newGoalData,
+      });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 });
 
 app.get("/all", async (req, res) => {
-    try {
-      const goals = await Goals.find();
-      if (goals) {
-        res
-          .status(200)
-          .send({ message: "found all goals", success: true, result: goals });
-      }
-    } catch (error) {
-      res.status(500).send({ message: error.message });
+  try {
+    const goals = await Goals.find();
+    if (goals) {
+      res
+        .status(200)
+        .send({ message: "found all goals", success: true, result: goals });
     }
-  });
-  
-  
-  app.delete('/all/:id',async(req,res)=>{
-    try {
-        const id = req.params.id;
-        const goal = await Goals.deleteOne({_id:id});
-        if(goal){
-            res.status(200).send({message: "deleted the goal", success: true, result: goal})
-        }
-    } catch (error) {
-        
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
+app.delete("/all/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const goal = await Goals.deleteOne({ _id: id });
+    if (goal) {
+      res
+        .status(200)
+        .send({ message: "deleted the goal", success: true, result: goal });
     }
-})
+  } catch (error) {}
+});
