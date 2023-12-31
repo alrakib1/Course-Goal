@@ -1,5 +1,7 @@
 import { type PropsWithChildren } from "react";
 import useAxiosPublic from "../api/useAxiosPublic";
+import toast from "react-hot-toast";
+
 type CourseGoalProps = PropsWithChildren<{
   id: number;
   title: string;
@@ -18,7 +20,9 @@ const CourseGoal = ({ title, id, children, refetch }: CourseGoalProps) => {
     const res = await axiosPublic.delete(`/all/${id}`);
     if (res.data.result.deletedCount) {
       refetch();
-      console.log(res.data.message)
+      toast.success(res.data.message,{
+        icon: '💀'
+      })
     }
   };
 

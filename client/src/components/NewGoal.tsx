@@ -1,6 +1,6 @@
 import { useRef, type FormEvent } from "react";
-import useAxiosPublic from '../api/useAxiosPublic.tsx';
-
+import useAxiosPublic from "../api/useAxiosPublic.tsx";
+import toast from "react-hot-toast";
 type NewGoalProps = {
   refetch: () => void;
 };
@@ -21,9 +21,11 @@ const NewGoal = ({ refetch }: NewGoalProps) => {
       const data = { enteredGoal, enteredSummary };
 
       try {
-        const response = await axiosPublic.post('/all', data);
-        console.log(response.data.result);
-        refetch();
+        const response = await axiosPublic.post("/all", data);
+        if (response.data.result) {
+          toast.success(response.data.message);
+          refetch();
+        }
       } catch (error) {
         console.error("Error adding goal:", error);
       }
