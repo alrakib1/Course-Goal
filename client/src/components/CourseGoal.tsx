@@ -1,9 +1,9 @@
 import { type PropsWithChildren } from "react";
+import useAxiosPublic from "../api/useAxiosPublic";
 type CourseGoalProps = PropsWithChildren<{
   id: number;
   title: string;
-  onDelete: (_id: number) => void;
-  refetch: ()=> void;
+  refetch: () => void;
 }>;
 
 // import {type ReactNode } from "react";
@@ -11,7 +11,17 @@ type CourseGoalProps = PropsWithChildren<{
 
 // we can import children two ways here. using generic or the other one
 
-const CourseGoal = ({ title,id, children, onDelete, refetch }: CourseGoalProps) => {
+const CourseGoal = ({ title, id, children, refetch }: CourseGoalProps) => {
+  const axiosPublic = useAxiosPublic();
+
+  const onDelete = async (id: number) => {
+    const res = await axiosPublic.delete(`/all/${id}`);
+    if (res.data.result.deletedCount) {
+      refetch();
+      console.log(res.data.message)
+    }
+  };
+
   return (
     <article>
       <div>

@@ -12,14 +12,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const goalSchema = new mongoose.Schema({
-  goal: {
+  title: {
     type: String,
-    required: [true, "Goal is required"],
+    required: [true, "title is required"],
     trim: true,
   },
-  summary: {
+  description: {
     type: String,
-    required: [true, "summary is required"],
+    required: [true, "description is required"],
     trim: true,
   },
 });
@@ -48,11 +48,11 @@ app.get("/", (req, res) => {
 app.post("/all", async (req, res) => {
   try {
     const newGoal = new Goals({
-      goal: req.body.enteredGoal,
-      summary: req.body.enteredSummary,
+      title: req.body.enteredGoal,
+      description: req.body.enteredSummary,
     });
 
-    console.log(newGoal)
+    // console.log(newGoal)
 
     const newGoalData = await newGoal.save();
 
