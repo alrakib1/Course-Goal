@@ -38,21 +38,22 @@ const Goals = mongoose.model("Goals", goalSchema);
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.url);
-    console.log("Mongodb is connected");
+    console.log("MongoDB connected successfully");
   } catch (error) {
-    console.log(error.message);
+    console.error("Error connecting to MongoDB:", error.message);
     process.exit(1);
   }
 };
+
+app.get("/", (req, res) => {
+  res.send("Course Goal Server!");
+});
 
 app.listen(port, async () => {
   console.log(`course goal server running on : http://localhost:${port}`);
   await connectDB();
 });
 
-app.get("/", (req, res) => {
-  res.send("Course Goal Server!");
-});
 
 app.post("/all", async (req, res) => {
   try {
