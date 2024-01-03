@@ -12,8 +12,6 @@ const corsOptions = {
   exposedHeaders: "*",
 };
 
-
-
 app.use(cors(corsOptions));
 
 app.use(express.json());
@@ -37,7 +35,7 @@ const Goals = mongoose.model("Goals", goalSchema);
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.url);
+    await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log("MongoDB connected successfully");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
@@ -45,15 +43,15 @@ const connectDB = async () => {
   }
 };
 
-app.get("/", (req, res) => {
-  res.send("Course Goal Server!");
-});
 
 app.listen(port, async () => {
   console.log(`course goal server running on : http://localhost:${port}`);
   await connectDB();
 });
 
+app.get("/", (req, res) => {
+  res.send("Course Goal Server!");
+});
 
 app.post("/all", async (req, res) => {
   try {
@@ -61,8 +59,6 @@ app.post("/all", async (req, res) => {
       title: req.body.enteredGoal,
       description: req.body.enteredSummary,
     });
-
-    // console.log(newGoal)
 
     const newGoalData = await newGoal.save();
 
@@ -72,6 +68,7 @@ app.post("/all", async (req, res) => {
       result: newGoalData,
     });
   } catch (error) {
+    console.error("Error adding goal:", error.message);
     res.status(500).send({ message: error.message });
   }
 });
@@ -79,12 +76,13 @@ app.post("/all", async (req, res) => {
 app.get("/all", async (req, res) => {
   try {
     const goals = await Goals.find();
-    if (goals) {
-      res
-        .status(200)
-        .send({ message: "found all goals", success: true, result: goals });
-    }
+    res.status(200).send({
+      message: "found all goals",
+      success: true,
+      result: goals,
+    });
   } catch (error) {
+    console.error("Error fetching goals:", error.message);
     res.status(500).send({ message: error.message });
   }
 });
@@ -92,11 +90,21 @@ app.get("/all", async (req, res) => {
 app.delete("/all/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const goal = await Goals.deleteOne({ _id: id });
+    const goal = await Goals.findOneAndDelete({ _id: id });
     if (goal) {
-      res
-        .status(200)
-        .send({ message: "deleted the goal", success: true, result: goal });
+      res.status(200).send({
+        message: "deleted the goal",
+        success: true,
+        result: goal,
+      });
+    } else {
+      res.status(404).send({
+        message: "goal not found",
+        success: false,
+      });
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error deleting goal:", error.message);
+    res.status(500).send({ message: error.message });
+  }
 });
