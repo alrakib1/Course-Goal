@@ -40,73 +40,73 @@ const connectDB = () => {
       useUnifiedTopology: true,
     });
     console.log("MongoDB connected successfully");
+
+    app.post("/all", async (req, res) => {
+      try {
+        const newGoal = new Goals({
+          title: req.body.enteredGoal,
+          description: req.body.enteredSummary,
+        });
+
+        const newGoalData = await newGoal.save();
+
+        res.status(201).send({
+          message: "goal has been added",
+          success: true,
+          result: newGoalData,
+        });
+      } catch (error) {
+        console.error("Error adding goal:", error.message);
+        res.status(500).send({ message: error.message });
+      }
+    });
+
+    app.get("/all", async (req, res) => {
+      try {
+        const goals = await Goals.find();
+        res.status(200).send({
+          message: "found all goals",
+          success: true,
+          result: goals,
+        });
+      } catch (error) {
+        console.error("Error fetching goals:", error.message);
+        res.status(500).send({ message: error.message });
+      }
+    });
+
+    app.delete("/all/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+        const goal = await Goals.findOneAndDelete({ _id: id });
+        if (goal) {
+          res.status(200).send({
+            message: "deleted the goal",
+            success: true,
+            result: goal,
+          });
+        } else {
+          res.status(404).send({
+            message: "goal not found",
+            success: false,
+          });
+        }
+      } catch (error) {
+        console.error("Error deleting goal:", error.message);
+        res.status(500).send({ message: error.message });
+      }
+    });
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
     process.exit(1);
   }
 };
 
-app.listen(port, () => {
-  console.log(`course goal server running on : http://localhost:${port}`);
-  connectDB();
-});
-
 app.get("/", (req, res) => {
   res.send("Course Goal Server!");
 });
 
-app.post("/all", async (req, res) => {
-  try {
-    const newGoal = new Goals({
-      title: req.body.enteredGoal,
-      description: req.body.enteredSummary,
-    });
-
-    const newGoalData = await newGoal.save();
-
-    res.status(201).send({
-      message: "goal has been added",
-      success: true,
-      result: newGoalData,
-    });
-  } catch (error) {
-    console.error("Error adding goal:", error.message);
-    res.status(500).send({ message: error.message });
-  }
-});
-
-app.get("/all", async (req, res) => {
-  try {
-    const goals = await Goals.find();
-    res.status(200).send({
-      message: "found all goals",
-      success: true,
-      result: goals,
-    });
-  } catch (error) {
-    console.error("Error fetching goals:", error.message);
-    res.status(500).send({ message: error.message });
-  }
-});
-
-app.delete("/all/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const goal = await Goals.findOneAndDelete({ _id: id });
-    if (goal) {
-      res.status(200).send({
-        message: "deleted the goal",
-        success: true,
-        result: goal,
-      });
-    } else {
-      res.status(404).send({
-        message: "goal not found",
-        success: false,
-      });
-    }
-  } catch (error) {
-    console.error("Error deleting goal:", error.message);
-    res.status(500).send({ message: error.message });
-  }
+app.listen(port, () => {
+  console.log(`course goal server running on : http://localhost:${port}`);
+  connectDB();
 });
