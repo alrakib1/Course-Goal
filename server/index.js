@@ -33,9 +33,12 @@ const goalSchema = new mongoose.Schema({
 
 const Goals = mongoose.model("Goals", goalSchema);
 
-const connectDB = async () => {
+const connectDB = () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("MongoDB connected successfully");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
@@ -43,10 +46,9 @@ const connectDB = async () => {
   }
 };
 
-
-app.listen(port, async () => {
+app.listen(port, () => {
   console.log(`course goal server running on : http://localhost:${port}`);
-  await connectDB();
+  connectDB();
 });
 
 app.get("/", (req, res) => {
