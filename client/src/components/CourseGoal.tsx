@@ -18,11 +18,11 @@ const CourseGoal = ({ title, id, children, refetch }: CourseGoalProps) => {
 
   const onDelete = async (id: number) => {
     const res = await axiosPublic.delete(`/all/${id}`);
-    if (res.data.result.deletedCount) {
+    if (res.data.success) {
       refetch();
-      toast.success(res.data.message,{
-        icon: '💀'
-      })
+      toast.success(res.data.message, {
+        icon: "💀",
+      });
     }
   };
 
@@ -32,7 +32,9 @@ const CourseGoal = ({ title, id, children, refetch }: CourseGoalProps) => {
         <h2>{title}</h2>
         {children}
       </div>
-      <button className="" onClick={() => onDelete(id)}>Delete</button>
+      <button className="" onClick={() => onDelete(id)}>
+        Delete
+      </button>
     </article>
   );
 };
