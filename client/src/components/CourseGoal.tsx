@@ -32,7 +32,7 @@ const CourseGoal = ({ title, id, children, refetch }: CourseGoalProps) => {
         <h2>{title}</h2>
         {children}
       </div>
-      <button onClick={() => onDelete(id)}>Delete</button>
+      <button className="" onClick={() => onDelete(id)}>Delete</button>
     </article>
   );
 };

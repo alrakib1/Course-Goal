@@ -6,7 +6,7 @@ import CourseGoalList from "./components/CourseGoalList";
 import NewGoal from "./components/NewGoal";
 // import useAxiosPublic from "./api/useAxiosPublic";
 import AllGoalsData from "./api/AllGoalsData.jsx";
-
+import { useEffect, useState } from "react";
 
 export type CourseGoal = {
   title: string;
@@ -14,38 +14,40 @@ export type CourseGoal = {
   _id: number;
 };
 
-
-
 export default function App() {
-  // const [goals, setGoals] = useState<CourseGoal[]>([]);
+  const { allGoals, refetch } = AllGoalsData();
 
+  const [theme, settheme] = useState("light");
 
-  // const axiosPublic = useAxiosPublic();
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    // return cleanUp = () => {
 
-  const {allGoals, refetch} = AllGoalsData();
- 
-// console.log(allGoals)
+    // }
+  }, [theme]);
 
-  // const handleAddGoal = () => {
-  //   setGoals((prevGoals) => {
-  //     const newGoal: CourseGoal = {
-  //       id: Math.random(),
-  //       title: "Learn React + TS",
-  //       description: "Learn it in depth",
-  //     };
-  //     return [...prevGoals, newGoal];
-  //   });
-  // };
-
-  
+  const handleSwitch = () => {
+    settheme(theme == "dark" ? "light" : "dark");
+  };
 
   return (
-    <main>
+    <main className="bg-white dark:bg-red-500">
       <Header image={{ src: goalsImg, alt: "A list of goals" }}>
         <h1>Your Course Goals</h1>
       </Header>
-     <NewGoal refetch={refetch}/>
-      <CourseGoalList  goals={allGoals} refetch={refetch}/>
+      <NewGoal refetch={refetch} />
+      <CourseGoalList goals={allGoals} refetch={refetch} />
+
+      <button
+        onClick={handleSwitch}
+        className="bg-blue-400 px-2 py-1 rounded-md"
+      >
+        Theme changer
+      </button>
     </main>
   );
 }

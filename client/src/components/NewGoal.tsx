@@ -44,7 +44,7 @@ const NewGoal = ({ refetch }: NewGoalProps) => {
         <input type="text" id="summary" ref={summary} />
       </p>
       <p>
-        <button type="submit">Add Goal</button>
+        <button className="bg-orange-400 dark:bg-white mb-5" type="submit">Add Goal</button>
       </p>
     </form>
   );
