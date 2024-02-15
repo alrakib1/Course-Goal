@@ -44,7 +44,7 @@ export default function App() {
 
       <button
         onClick={handleSwitch}
-        className="bg-blue-400 px-2 py-1 rounded-md"
+        className="bg-blue-400 px-2 py-1 mt-5 rounded-md"
       >
         Theme changer
       </button>
