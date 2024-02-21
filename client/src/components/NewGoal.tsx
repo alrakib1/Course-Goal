@@ -13,11 +13,12 @@ const NewGoal = ({ refetch }: NewGoalProps) => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    
     if (goal.current && summary.current) {
       const enteredGoal = goal.current.value;
       const enteredSummary = summary.current.value;
-
+      event.currentTarget.reset();
+      
       const data = { enteredGoal, enteredSummary };
 
       try {

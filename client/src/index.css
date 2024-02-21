@@ -1,20 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
   min-height: 100vh;
   background: linear-gradient(#f0f6f8, #e0e1e7);
+}
+
+.dark body {
+  background: linear-gradient(#3a4346, #475357);
 }
 
 main {
@@ -45,7 +50,7 @@ img {
 header h1 {
   margin: 0;
   font-size: 1.75rem;
-  color: #f7e596;
+  color: #0073ff;
 }
 
 label {
@@ -53,7 +58,7 @@ label {
   font-size: 0.85rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #dfd9be;
+  color: #095be0;
 }
 
 input {
@@ -114,7 +119,7 @@ li h2 {
 li p {
   margin: 0;
   font-size: 0.85rem;
-  color: #dfd9be;
+  color: #fed000;
 }
 
 li button {

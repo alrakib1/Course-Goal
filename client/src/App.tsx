@@ -1,10 +1,8 @@
 import CourseGoal from "./components/CourseGoal";
 import goalsImg from "./assets/goals.jpg";
 import Header from "./components/Header";
-// import { useState } from "react";
 import CourseGoalList from "./components/CourseGoalList";
 import NewGoal from "./components/NewGoal";
-// import useAxiosPublic from "./api/useAxiosPublic";
 import AllGoalsData from "./api/AllGoalsData.jsx";
 import { useEffect, useState } from "react";
 
@@ -17,7 +15,9 @@ export type CourseGoal = {
 export default function App() {
   const { allGoals, refetch } = AllGoalsData();
 
-  const [theme, settheme] = useState("light");
+  const [theme, setTheme] = useState<React.SetStateAction<string | null>>(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+  );
 
   useEffect(() => {
     if (theme === "dark") {
@@ -25,19 +25,19 @@ export default function App() {
     } else {
       document.documentElement.classList.remove("dark");
     }
-    // return cleanUp = () => {
-
-    // }
   }, [theme]);
 
   const handleSwitch = () => {
-    settheme(theme == "dark" ? "light" : "dark");
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+
   };
 
   return (
-    <main className="bg-white dark:bg-red-500">
+    <main className="bg-white dark:bg-gray-950">
       <Header image={{ src: goalsImg, alt: "A list of goals" }}>
-        <h1>Your Course Goals</h1>
+        <h1>Your Goals</h1>
       </Header>
       <NewGoal refetch={refetch} />
       <CourseGoalList goals={allGoals} refetch={refetch} />
